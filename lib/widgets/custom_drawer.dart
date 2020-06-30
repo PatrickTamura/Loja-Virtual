@@ -3,6 +3,7 @@ import 'package:primeiro_app/models/user_model.dart';
 import 'package:primeiro_app/screens/login_screen.dart';
 import 'package:primeiro_app/tiles/drawer_tile.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomDrawer extends StatelessWidget {
   final PageController pageController;
@@ -82,6 +83,32 @@ class CustomDrawer extends StatelessWidget {
             DrawerTile(Icons.location_on, "Lojas", pageController, 2),
             DrawerTile(
                 Icons.playlist_add_check, "Meus Pedidos", pageController, 3),
+            Material(
+      color: Colors.transparent,
+      child: InkWell(
+          onTap: () => launch('https://embraer.com/br/pt'),
+        child: Container(
+              height: 60.0,
+          child: Row(
+            children: <Widget>[
+              Icon(
+                Icons.phone,
+                size: 32.0,
+                color: Colors.grey[700],
+              ),
+              SizedBox(width: 32.0,),
+              Text(
+                "Fale Conosco",
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.grey[700],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    ),
             Align(
               alignment: Alignment.bottomLeft,
               child: Image.network('https://logodownload.org/wp-content/uploads/2014/06/embraer-logo-1.png',

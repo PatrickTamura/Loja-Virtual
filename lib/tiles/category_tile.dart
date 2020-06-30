@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:primeiro_app/screens/category_screen.dart';
 
+
 class CategoryTile extends StatelessWidget {
 
   final DocumentSnapshot snapshot;
@@ -9,7 +10,6 @@ class CategoryTile extends StatelessWidget {
   CategoryTile(this.snapshot);
 
   @override
-
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(

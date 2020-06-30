@@ -10,7 +10,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
@@ -29,9 +28,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
           centerTitle: true,
         ),
         body: ScopedModelDescendant<UserModel>(
-          builder: (context, child, model){
-            if(model.isLoading)
-              return Center(child: CircularProgressIndicator(),);
+          builder: (context, child, model) {
+            if (model.isLoading)
+              return Center(
+                child: CircularProgressIndicator(),
+              );
 
             return Form(
               key: _formKey,
@@ -40,85 +41,84 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: <Widget>[
                   TextFormField(
                     controller: _nameController,
-                    decoration: InputDecoration(
-                        hintText: "Nome Completo"
-                    ),
-                    validator: (text){
-                      if(text.isEmpty)
-                      return "Nome Inválido!";
-                      
+                    decoration: InputDecoration(hintText: "Nome Completo"),
+                    validator: (text) {
+                      if (text.isEmpty) return "Nome Inválido!";
                     },
                   ),
-                  SizedBox(height: 16.0,),
+                  SizedBox(
+                    height: 16.0,
+                  ),
                   TextFormField(
                     controller: _emailController,
-                    decoration: InputDecoration(
-                        hintText: "E-mail"
-                    ),
+                    decoration: InputDecoration(hintText: "E-mail"),
                     keyboardType: TextInputType.emailAddress,
-                    validator: (text){
-                      if(text.isEmpty || !text.contains("@")) return "E-mail inválido!";
+                    validator: (text) {
+                      if (text.isEmpty || !text.contains("@"))
+                        return "E-mail inválido!";
                     },
                   ),
-                  SizedBox(height: 16.0,),
+                  SizedBox(
+                    height: 16.0,
+                  ),
                   TextFormField(
                     controller: _passController,
-                    decoration: InputDecoration(
-                        hintText: "Senha"
-                    ),
+                    decoration: InputDecoration(hintText: "Senha"),
                     obscureText: true,
-                    validator: (text){
-                      if(text.isEmpty || text.length < 6) return "Senha inválida!";
+                    validator: (text) {
+                      if (text.isEmpty || text.length < 6)
+                        return "Senha inválida!";
                     },
                   ),
-                  SizedBox(height: 16.0,),
+                  SizedBox(
+                    height: 16.0,
+                  ),
                   TextFormField(
                     controller: _addressController,
-                    decoration: InputDecoration(
-                        hintText: "Endereço"
-                    ),
-                    validator: (text){
-                      if(text.isEmpty) return "Endereço inválido!";
+                    decoration: InputDecoration(hintText: "Endereço"),
+                    validator: (text) {
+                      if (text.isEmpty) return "Endereço inválido!";
                     },
                   ),
-                  SizedBox(height: 16.0,),
+                  SizedBox(
+                    height: 16.0,
+                  ),
                   TextFormField(
                     controller: _contactController,
                     keyboardType: TextInputType.numberWithOptions(),
-                    decoration: InputDecoration(
-                        hintText: "Telefone: (DDD) XXXX-XXXX"
-                    ),
-                    validator: (text){
-                      if(text.isEmpty || text.length < 10) return "Telefone inválido!";
+                    decoration: InputDecoration(hintText: "Telefone"),
+                    validator: (text) {
+                      if (text.isEmpty || text.length < 10) return "Número inválido!";
                     },
                   ),
-                  SizedBox(height: 16.0,),
+                  SizedBox(
+                    height: 16.0,
+                  ),
                   SizedBox(
                     height: 44.0,
                     child: RaisedButton(
-                      child: Text("Criar Conta",
+                      child: Text(
+                        "Criar Conta",
                         style: TextStyle(
                           fontSize: 18.0,
                         ),
                       ),
                       textColor: Colors.white,
                       color: Theme.of(context).primaryColor,
-                      onPressed: (){
-                        if(_formKey.currentState.validate()){
-
+                      onPressed: () {
+                        if (_formKey.currentState.validate()) {
                           Map<String, dynamic> userData = {
                             "name": _nameController.text,
                             "email": _emailController.text,
                             "address": _addressController.text,
-                            "contact" : _contactController
+                            "contact": _contactController.text.toString(),
                           };
 
                           model.signUp(
                               userData: userData,
                               pass: _passController.text,
                               onSuccess: _onSuccess,
-                              onFail: _onFail
-                          );
+                              onFail: _onFail);
                         }
                       },
                     ),
@@ -127,33 +127,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             );
           },
-        )
-    );
+        ));
   }
 
-  void _onSuccess(){
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(content: Text("Usuário criado com sucesso!"),
-        backgroundColor: Theme.of(context).primaryColor,
-        duration: Duration(seconds: 2),
-      )
-    );
-    Future.delayed(Duration(seconds: 2)).then((_){
+  void _onSuccess() {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text("Usuário criado com sucesso!"),
+      backgroundColor: Theme.of(context).primaryColor,
+      duration: Duration(seconds: 2),
+    ));
+    Future.delayed(Duration(seconds: 2)).then((_) {
       Navigator.of(context).pop();
     });
   }
 
-  void _onFail(){
-    _scaffoldKey.currentState.showSnackBar(
-        SnackBar(content: Text("Falha ao criar usuário!"),
-          backgroundColor: Colors.redAccent,
-          duration: Duration(seconds: 2),
-        )
-    );
+  void _onFail() {
+    _scaffoldKey.currentState.showSnackBar(SnackBar(
+      content: Text("Falha ao criar usuário!"),
+      backgroundColor: Colors.redAccent,
+      duration: Duration(seconds: 2),
+    ));
   }
-
 }
-
-
-
-
